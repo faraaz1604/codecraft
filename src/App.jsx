@@ -6,7 +6,8 @@ import CodeOutput from "./components/CodeOutput";
 import Suggestions from "./components/Suggestions";
 import Loading from "./components/Loading";
 import ConnectionStatus from "./components/ConnectionStatus";
-import { API_CONFIG } from './config/api';
+
+import { API_CONFIG, getApiToken } from './config/api';
 
 
 
@@ -287,7 +288,7 @@ function App() {
             <ConnectionStatus
               darkMode={darkMode}
               apiMode={apiMode}
-              apiKey={apiKey}
+              
             />
             <button
               onClick={() => setShowSettings(true)}

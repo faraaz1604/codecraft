@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Check, XCircle } from 'lucide-react';
-import { getApiToken } from '../config/api';  // Add this import
+import { getApiToken } from '../config/api';
 
-const ConnectionStatus = ({ darkMode, apiMode }) => {  // Remove apiKey from props
+const ConnectionStatus = ({ darkMode, apiMode }) => {
   const [status, setStatus] = useState('checking');
 
   useEffect(() => {
@@ -16,17 +16,16 @@ const ConnectionStatus = ({ darkMode, apiMode }) => {  // Remove apiKey from pro
             setStatus('disconnected');
           }
         } else {
-          // For Hugging Face, use the token from config
           const token = getApiToken();
           if (token) {
-            setStatus('connected');  // Always show connected for Hugging Face when token exists
+            setStatus('connected');
           } else {
             setStatus('disconnected');
           }
         }
       } catch (error) {
         if (apiMode === 'huggingface') {
-          setStatus('connected');  // Keep Hugging Face connected even if check fails
+          setStatus('connected');
         } else {
           setStatus('disconnected');
         }
