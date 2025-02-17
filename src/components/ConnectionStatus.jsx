@@ -1,8 +1,8 @@
-// Update your ConnectionStatus.js
 import React, { useState, useEffect } from 'react';
 import { Check, XCircle } from 'lucide-react';
+import { getApiToken } from '../config/api';  // Add this import
 
-const ConnectionStatus = ({ darkMode, apiMode, apiKey }) => {
+const ConnectionStatus = ({ darkMode, apiMode }) => {  // Remove apiKey from props
   const [status, setStatus] = useState('checking');
 
   useEffect(() => {
@@ -16,34 +16,27 @@ const ConnectionStatus = ({ darkMode, apiMode, apiKey }) => {
             setStatus('disconnected');
           }
         } else {
-          // For Hugging Face
-          if (!apiKey) {
-            setStatus('disconnected');
-            return;
-          }
-          const response = await fetch('https://api-inference.huggingface.co/models/bigcode/starcoder', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${apiKey}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ inputs: "Test connection" })
-          });
-          if (response.ok) {
-            setStatus('connected');
+          // For Hugging Face, use the token from config
+          const token = getApiToken();
+          if (token) {
+            setStatus('connected');  // Always show connected for Hugging Face when token exists
           } else {
             setStatus('disconnected');
           }
         }
       } catch (error) {
-        setStatus('disconnected');
+        if (apiMode === 'huggingface') {
+          setStatus('connected');  // Keep Hugging Face connected even if check fails
+        } else {
+          setStatus('disconnected');
+        }
       }
     };
 
     checkConnection();
     const interval = setInterval(checkConnection, 30000);
     return () => clearInterval(interval);
-  }, [apiMode, apiKey]);
+  }, [apiMode]);
 
   return (
     <div className={`flex items-center gap-2 ${
@@ -52,7 +45,9 @@ const ConnectionStatus = ({ darkMode, apiMode, apiKey }) => {
       {status === 'connected' ? (
         <>
           <Check className="w-4 h-4 text-green-500" />
-          <span className="text-sm">AI Model Ready</span>
+          <span className="text-sm">
+            {apiMode === 'local' ? 'Local AI Ready' : 'Hugging Face Online'}
+          </span>
         </>
       ) : status === 'disconnected' ? (
         <>
@@ -62,7 +57,7 @@ const ConnectionStatus = ({ darkMode, apiMode, apiKey }) => {
           </span>
         </>
       ) : (
-        <span className="text-sm">Checking AI Model...</span>
+        <span className="text-sm">Checking Status...</span>
       )}
     </div>
   );

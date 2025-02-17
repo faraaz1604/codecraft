@@ -6,23 +6,9 @@ import CodeOutput from "./components/CodeOutput";
 import Suggestions from "./components/Suggestions";
 import Loading from "./components/Loading";
 import ConnectionStatus from "./components/ConnectionStatus";
+import { API_CONFIG } from './config/api';
 
-const API_CONFIG = {
-  local: {
-    baseUrl: "http://localhost:8080/api",
-    statusEndpoint: "/status",
-    reviewEndpoint: "/review",
-    generateEndpoint: "/generate",
-  },
-  huggingface: {
-    baseUrl: "https://api-inference.huggingface.co/models",
-    model: "bigcode/starcoder",
-    headers: (apiKey) => ({
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    }),
-  },
-};
+
 
 function App() {
   const [code, setCode] = useState("");
