@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/codecraft/static/css/main.372ab690.css",
-    "main.js": "/codecraft/static/js/main.ced8aac6.js",
+    "main.js": "/codecraft/static/js/main.35ea4e61.js",
     "index.html": "/codecraft/index.html",
     "main.372ab690.css.map": "/codecraft/static/css/main.372ab690.css.map",
-    "main.ced8aac6.js.map": "/codecraft/static/js/main.ced8aac6.js.map"
+    "main.35ea4e61.js.map": "/codecraft/static/js/main.35ea4e61.js.map"
   },
   "entrypoints": [
     "static/css/main.372ab690.css",
-    "static/js/main.ced8aac6.js"
+    "static/js/main.35ea4e61.js"
   ]
 }
