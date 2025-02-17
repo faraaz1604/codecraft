@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/faraaz1604/codecraft.git/static/css/main.372ab690.css",
+    "main.js": "/faraaz1604/codecraft.git/static/js/main.ced8aac6.js",
+    "index.html": "/faraaz1604/codecraft.git/index.html",
+    "main.372ab690.css.map": "/faraaz1604/codecraft.git/static/css/main.372ab690.css.map",
+    "main.ced8aac6.js.map": "/faraaz1604/codecraft.git/static/js/main.ced8aac6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.372ab690.css",
+    "static/js/main.ced8aac6.js"
+  ]
+}
