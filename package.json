@@ -2,7 +2,7 @@
   "name": "code-generator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/faraaz1604/codecraft.git",
+  "homepage": "https://faraaz1604.github.io/codecraft/",
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@monaco-editor/react": "^4.6.0",
