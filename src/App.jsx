@@ -7,9 +7,7 @@ import Suggestions from "./components/Suggestions";
 import Loading from "./components/Loading";
 import ConnectionStatus from "./components/ConnectionStatus";
 
-import { API_CONFIG, getApiToken } from './config/api';
-
-
+import { API_CONFIG, getApiToken } from "./config/api";
 
 function App() {
   const [code, setCode] = useState("");
@@ -174,12 +172,6 @@ function App() {
     setIsLoading(true);
     try {
       if (apiMode === "huggingface") {
-        if (!apiKey) {
-          setSuggestions("Please enter your Hugging Face API key in settings");
-          setIsLoading(false);
-          return;
-        }
-
         const promptText = code.trim()
           ? `Review this ${language} code and provide suggestions for improvement, followed by the improved code with "IMPROVED_CODE:" prefix:\n\n${code}`
           : `Generate ${language} code for the following request:\n\n${prompt}`;
@@ -188,7 +180,7 @@ function App() {
           `${API_CONFIG.huggingface.baseUrl}/${API_CONFIG.huggingface.model}`,
           {
             method: "POST",
-            headers: API_CONFIG.huggingface.headers(apiKey),
+            headers: API_CONFIG.huggingface.headers(), // Remove apiKey parameter
             body: JSON.stringify({ inputs: promptText }),
           }
         );
@@ -211,7 +203,7 @@ function App() {
           setSuggestions("");
         }
       } else {
-        // Local API logic
+        // Local API logic remains the same
         if (code.trim()) {
           const response = await fetch(
             `${API_CONFIG.local.baseUrl}${API_CONFIG.local.reviewEndpoint}`,
@@ -285,11 +277,7 @@ function App() {
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <ConnectionStatus
-              darkMode={darkMode}
-              apiMode={apiMode}
-              
-            />
+            <ConnectionStatus darkMode={darkMode} apiMode={apiMode} />
             <button
               onClick={() => setShowSettings(true)}
               className={`p-2 rounded-lg transform hover:scale-110 transition-all duration-200 ${
@@ -449,7 +437,47 @@ function App() {
                 advanced AI, it supports multiple programming languages and
                 provides instant feedback and suggestions.
               </p>
+              <div
+                className={`mt-4 p-4 rounded-lg ${
+                  darkMode ? "bg-gray-700/50" : "bg-gray-100"
+                }`}
+              >
+                <h4
+                  className={`text-sm font-semibold mb-2 ${
+                    darkMode ? "text-white" : "text-gray-900"
+                  }`}
+                >
+                  Using Your Own API Key
+                </h4>
+                <p
+                  className={`text-sm ${
+                    darkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
+                >
+                  While CodeCraft AI provides a default API key for testing, you
+                  can use your own Hugging Face API key for better rate limits
+                  and reliability:
+                  <ol className="list-decimal ml-5 mt-2 space-y-1">
+                    <li>
+                      Visit{" "}
+                      <a
+                        href="https://huggingface.co/settings/tokens"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        Hugging Face Tokens
+                      </a>
+                    </li>
+                    <li>Generate a new API token</li>
+                    <li>Click the Settings icon in CodeCraft AI</li>
+                    <li>Select "Hugging Face API" mode</li>
+                    <li>Paste your token in the API Key field</li>
+                  </ol>
+                </p>
+              </div>
             </div>
+
             <div
               className={`p-6 rounded-lg transform hover:scale-102 transition-all duration-200 ${
                 darkMode ? "bg-gray-800/50" : "bg-white"
@@ -482,6 +510,14 @@ function App() {
                 <li className="flex items-center">
                   <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                   Instant Code Improvement Suggestions
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span>
+                  Use Default or Your Own API Key
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                  Local & Cloud AI Support
                 </li>
               </ul>
             </div>

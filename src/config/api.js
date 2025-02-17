@@ -1,3 +1,4 @@
+// src/config/api.js
 const DEFAULT_TOKEN = "aGZfV2pyanBQeUxLd0N0Tk9mQ3NnTWdnQVZVVHRDTGtuc1hwcg=="; 
 
 export const getApiToken = () => {
@@ -18,9 +19,9 @@ export const API_CONFIG = {
   huggingface: {
     baseUrl: "https://api-inference.huggingface.co/models",
     model: "bigcode/starcoder",
-    headers: (apiKey) => ({
-      Authorization: `Bearer ${apiKey || getApiToken()}`,
-      "Content-Type": "application/json",
+    headers: () => ({
+      'Authorization': `Bearer ${getApiToken()}`,
+      'Content-Type': 'application/json'
     }),
   },
 };
